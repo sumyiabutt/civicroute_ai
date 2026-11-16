@@ -131,20 +131,33 @@ python start_demo.py            # web app on http://127.0.0.1:8000, MCP on 8777
 PORT=8010 CIVICROUTE_MCP_PORT=8778 python start_demo.py
 ```
 
-## Deploying to Render
+## Deploying to a Hugging Face Space
 
-`render.yaml` is a Render blueprint: one free web service, `pip install -r requirements.txt` on
-build, `python start_demo.py` to start, health check on `/api/health`.
+A Space gives you a real container with a public URL and no payment method, which is what this app
+needs - two processes, one of them long-lived. The Space repository holds only the
+[Dockerfile](Dockerfile), and that Dockerfile pulls this repo's `main` at build time, so pushing
+here stays the only way the hosted demo changes.
 
-1. <https://render.com> -> **New** -> **Blueprint** -> pick this repo. Render reads `render.yaml`.
-2. Deploy. The service URL serves the same page as localhost.
+1. <https://huggingface.co> -> sign up (free) -> **Spaces** -> **Create new Space**.
+2. SDK: **Docker**, license MIT, then **Create Space**.
+3. In the Space: **Files** -> **Add file** -> **Upload a file** -> pick this repo's `Dockerfile`, commit.
+4. It builds, then serves the same page at `https://<user>-<space>.hf.space`.
 
-Free web services sleep after inactivity, so the first request after a quiet stretch can take
-~50 seconds - click **Plan my route** once before a demo. Serverless hosts like Vercel cannot run
-this app: the agent talks to a long-lived MCP server over Streamable HTTP, and Vercel has no place
-to keep that process. To use Bedrock in a deployed service, add `AWS_ACCESS_KEY_ID`,
-`AWS_SECRET_ACCESS_KEY` and `AWS_REGION` in the Render environment tab - without them the
-rule-based planner answers, which is the intended demo path.
+Free Spaces sleep after a quiet stretch and take a couple of minutes to wake, so open the URL once
+before a demo. To enable Bedrock there, add `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and
+`AWS_REGION` under **Settings** -> **Repository secrets** - without them the rule-based planner
+answers, which is the intended demo path.
+
+## Deploying to Render instead
+
+`render.yaml` is a Render blueprint: one web service, `pip install -r requirements.txt` on build,
+`python start_demo.py` to start, health check on `/api/health` - picked up by **New** ->
+**Blueprint** -> this repo. Note that a brand-new Render account is asked for a card (a $1 identity
+authorization) before it will create even a free instance.
+
+Both hosts run the same architecture. Serverless hosts like Vercel cannot run this app as it is
+written: the agent talks to a long-lived MCP server over Streamable HTTP, and Vercel has no place to
+keep that process.
 
 ## Worked example
 
@@ -300,7 +313,8 @@ Peak vs off-peak: pass `peak: false` to `compare_routes` / `estimate_congestion`
 | `civicroute/templates/index.html` | The page: city dropdown, Leaflet + OpenStreetMap traffic layer, route cards, reasoning timeline |
 | `docs/CivicRoute-AI-Report.md`, `.docx` | The hackathon write-up: architecture, worked example with real numbers, verification log |
 | `start_demo.py` | Spawns the MCP server then the web app, so one process tree can be deployed |
-| `render.yaml` | Render blueprint for the free web service that runs `start_demo.py` |
+| `Dockerfile` | The only file a Hugging Face Space needs; it pulls `main` from GitHub at build time |
+| `render.yaml` | Render blueprint for the web service that runs `start_demo.py` |
 | `requirements.txt`, `LICENSE` | Setup and MIT licence |
 
 ## Troubleshooting
