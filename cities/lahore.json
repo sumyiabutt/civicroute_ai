@@ -1,0 +1,86 @@
+{
+  "city": "Lahore",
+  "city_id": "lahore",
+  "updated_at": "2026-10-21T08:00:00+05:00",
+  "default_origin": "liberty",
+  "default_destination": "modeltown",
+  "nodes": [
+    { "id": "liberty", "name": "Liberty Market Gulberg", "area": "Gulberg", "kind": "retail", "lat": 31.5104, "lng": 74.3434, "aliases": ["liberty", "liberty market", "gulberg"] },
+    { "id": "mayo", "name": "Mayo Hospital", "area": "Mall Road", "kind": "health", "lat": 31.5667, "lng": 74.3189, "aliases": ["mayo", "mayo hospital", "hospital"] },
+    { "id": "datadarbar", "name": "Data Darbar", "area": "Data Darbar Kalan", "kind": "commercial", "lat": 31.5790, "lng": 74.3045, "aliases": ["data darbar", "datadarbar", "dargah"] },
+    { "id": "ravi", "name": "Ravi Bridge", "area": "Ravi", "kind": "bridge", "lat": 31.5970, "lng": 74.3000, "aliases": ["ravi", "ravi bridge", "ravi river"] },
+    { "id": "modeltown", "name": "Model Town", "area": "Model Town", "kind": "residential", "lat": 31.4833, "lng": 74.3167, "aliases": ["model town", "modeltown"] },
+    { "id": "johar", "name": "Johar Town", "area": "Johar Town", "kind": "residential", "lat": 31.4697, "lng": 74.2728, "aliases": ["johar", "johar town"] },
+    { "id": "airport", "name": "Allama Iqbal International Airport", "area": "Airline Colony", "kind": "airport", "lat": 31.5216, "lng": 74.4036, "aliases": ["airport", "allama iqbal", "terminal", "flight"] }
+  ],
+  "edges": [
+    { "id": "E1", "from": "liberty", "to": "airport", "name": "Ferozepur Road", "road_type": "highway", "distance_km": 7.6, "base_travel_min": 12, "closed": false },
+    { "id": "E2", "from": "liberty", "to": "modeltown", "name": "Canal Road", "road_type": "arterial", "distance_km": 5.1, "base_travel_min": 10, "closed": false },
+    { "id": "E3", "from": "liberty", "to": "mayo", "name": "Canal Road", "road_type": "arterial", "distance_km": 8.7, "base_travel_min": 16, "closed": false },
+    { "id": "E4", "from": "modeltown", "to": "mayo", "name": "Mall Road", "road_type": "arterial", "distance_km": 12.1, "base_travel_min": 22, "closed": false },
+    { "id": "E5", "from": "modeltown", "to": "johar", "name": "Lahore Ring Road", "road_type": "highway", "distance_km": 5.8, "base_travel_min": 7, "closed": false },
+    { "id": "E6", "from": "modeltown", "to": "airport", "name": "Lahore Ring Road", "road_type": "highway", "distance_km": 12.1, "base_travel_min": 12, "closed": false },
+    { "id": "E7", "from": "mayo", "to": "datadarbar", "name": "Mall Road", "road_type": "street", "distance_km": 2.5, "base_travel_min": 7, "closed": false },
+    { "id": "E8", "from": "datadarbar", "to": "ravi", "name": "Ravi Road", "road_type": "arterial", "distance_km": 2.7, "base_travel_min": 5, "closed": false },
+    { "id": "E9", "from": "airport", "to": "johar", "name": "Multan Road", "road_type": "highway", "distance_km": 17.8, "base_travel_min": 18, "closed": true },
+    { "id": "E10", "from": "liberty", "to": "johar", "name": "Jail Road", "road_type": "arterial", "distance_km": 10.5, "base_travel_min": 20, "closed": false },
+    { "id": "E11", "from": "mayo", "to": "ravi", "name": "Ravi Road", "road_type": "bridge", "distance_km": 5.0, "base_travel_min": 8, "closed": false },
+    { "id": "E12", "from": "datadarbar", "to": "liberty", "name": "Jail Road", "road_type": "arterial", "distance_km": 11.0, "base_travel_min": 20, "closed": false }
+  ],
+  "incidents": [
+    {
+      "id": "INC-2041",
+      "title": "Multi-vehicle collision on Canal Road near Liberty Market",
+      "edges": ["E3"],
+      "type": "collision",
+      "severity": "high",
+      "status": "active",
+      "reported": "08:15",
+      "extra_delay_min": 0,
+      "closes_edge": ["E3"],
+      "note": "Both carriageways blocked near the Liberty Market flyover while a crane clears three vehicles. Expect the closure for another 40 minutes."
+    },
+    {
+      "id": "INC-2044",
+      "title": "Interchange works on the Lahore Ring Road",
+      "edges": ["E6"],
+      "type": "roadworks",
+      "severity": "medium",
+      "status": "active",
+      "reported": "07:40",
+      "extra_delay_min": 6,
+      "closes_edge": [],
+      "note": "Slip road towards the airport closed for pier works; one lane open in each direction."
+    },
+    {
+      "id": "INC-2038",
+      "title": "Signal failure at the Mall Road crossing",
+      "edges": ["E4"],
+      "type": "signal_fault",
+      "severity": "low",
+      "status": "active",
+      "reported": "08:05",
+      "extra_delay_min": 4,
+      "closes_edge": [],
+      "note": "Police are directing traffic through the junction near Kingsway."
+    },
+    {
+      "id": "INC-2050",
+      "title": "Flash flooding on Ravi Road",
+      "edges": ["E8"],
+      "type": "flooding",
+      "severity": "medium",
+      "status": "resolved",
+      "reported": "05:30",
+      "extra_delay_min": 0,
+      "closes_edge": ["E8"],
+      "note": "Overflow from the Ravi has cleared and the road is passable again."
+    }
+  ],
+  "examples": [
+    "Canal Road blocked near Liberty Market, route me to Mayo Hospital",
+    "I am leaving Johar Town, get me to the airport, Multan Road is closed",
+    "Signal failure on Mall Road, take me home to Model Town",
+    "What is the quickest way from Data Darbar to Liberty Market right now?"
+  ]
+}

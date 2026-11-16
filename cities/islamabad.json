@@ -1,0 +1,290 @@
+{
+  "city": "Islamabad",
+  "city_id": "islamabad",
+  "updated_at": "2026-10-21T08:00:00+05:00",
+  "default_origin": "bluearea",
+  "default_destination": "i8",
+  "nodes": [
+    {
+      "id": "bluearea",
+      "name": "Blue Area",
+      "area": "Central Business District",
+      "kind": "work",
+      "lat": 33.693,
+      "lng": 73.052,
+      "aliases": [
+        "blue area",
+        "bluearea",
+        "cbd"
+      ]
+    },
+    {
+      "id": "f6",
+      "name": "F-6 Markaz",
+      "area": "F-6",
+      "kind": "commercial",
+      "lat": 33.707,
+      "lng": 73.048,
+      "aliases": [
+        "f-6",
+        "f6",
+        "markaz"
+      ]
+    },
+    {
+      "id": "faisal",
+      "name": "Faisal Mosque",
+      "area": "F-6",
+      "kind": "tourism",
+      "lat": 33.7295,
+      "lng": 73.0372,
+      "aliases": [
+        "faisal mosque",
+        "mosque",
+        "margalla"
+      ]
+    },
+    {
+      "id": "i8",
+      "name": "I-8 Markaz",
+      "area": "I-8",
+      "kind": "residential",
+      "lat": 33.662,
+      "lng": 73.065,
+      "aliases": [
+        "i-8",
+        "i8"
+      ]
+    },
+    {
+      "id": "pims",
+      "name": "PIMS Hospital",
+      "area": "G-7/1",
+      "kind": "health",
+      "lat": 33.6467,
+      "lng": 73.081,
+      "aliases": [
+        "pims",
+        "hospital",
+        "polyclinic"
+      ]
+    },
+    {
+      "id": "airport",
+      "name": "Islamabad International Airport",
+      "area": "Behkal",
+      "kind": "airport",
+      "lat": 33.5565,
+      "lng": 72.834,
+      "aliases": [
+        "airport",
+        "iia",
+        "terminal",
+        "flight"
+      ]
+    },
+    {
+      "id": "bahria",
+      "name": "Bahria Town Phase 4",
+      "area": "Bahria Town",
+      "kind": "retail",
+      "lat": 33.62,
+      "lng": 72.96,
+      "aliases": [
+        "bahria",
+        "bahria town",
+        "phase 4"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "E1",
+      "from": "f6",
+      "to": "bluearea",
+      "name": "Jinnah Avenue",
+      "road_type": "arterial",
+      "distance_km": 2.1,
+      "base_travel_min": 3,
+      "closed": false
+    },
+    {
+      "id": "E2",
+      "from": "faisal",
+      "to": "f6",
+      "name": "Margalla Road",
+      "road_type": "street",
+      "distance_km": 3.5,
+      "base_travel_min": 8,
+      "closed": false
+    },
+    {
+      "id": "E3",
+      "from": "bluearea",
+      "to": "i8",
+      "name": "Kashmir Highway",
+      "road_type": "arterial",
+      "distance_km": 4.7,
+      "base_travel_min": 7,
+      "closed": false
+    },
+    {
+      "id": "E4",
+      "from": "i8",
+      "to": "pims",
+      "name": "I-9 Expressway",
+      "road_type": "arterial",
+      "distance_km": 2.9,
+      "base_travel_min": 4,
+      "closed": false
+    },
+    {
+      "id": "E5",
+      "from": "pims",
+      "to": "bahria",
+      "name": "Golra Road",
+      "road_type": "arterial",
+      "distance_km": 15.1,
+      "base_travel_min": 23,
+      "closed": false
+    },
+    {
+      "id": "E6",
+      "from": "bahria",
+      "to": "airport",
+      "name": "Motorway M-1",
+      "road_type": "highway",
+      "distance_km": 17.7,
+      "base_travel_min": 16,
+      "closed": false
+    },
+    {
+      "id": "E7",
+      "from": "pims",
+      "to": "airport",
+      "name": "Islamabad Expressway",
+      "road_type": "highway",
+      "distance_km": 32.5,
+      "base_travel_min": 30,
+      "closed": false
+    },
+    {
+      "id": "E8",
+      "from": "faisal",
+      "to": "bluearea",
+      "name": "Faisal Avenue",
+      "road_type": "arterial",
+      "distance_km": 5.6,
+      "base_travel_min": 8,
+      "closed": false
+    },
+    {
+      "id": "E9",
+      "from": "f6",
+      "to": "i8",
+      "name": "Shakarparian Road",
+      "road_type": "arterial",
+      "distance_km": 6.8,
+      "base_travel_min": 10,
+      "closed": true
+    },
+    {
+      "id": "E10",
+      "from": "i8",
+      "to": "airport",
+      "name": "Islamabad Expressway",
+      "road_type": "highway",
+      "distance_km": 31.7,
+      "base_travel_min": 29,
+      "closed": false
+    },
+    {
+      "id": "E11",
+      "from": "faisal",
+      "to": "i8",
+      "name": "National Avenue",
+      "road_type": "arterial",
+      "distance_km": 10.3,
+      "base_travel_min": 15,
+      "closed": false
+    },
+    {
+      "id": "E12",
+      "from": "bahria",
+      "to": "bluearea",
+      "name": "Express Avenue",
+      "road_type": "arterial",
+      "distance_km": 15.3,
+      "base_travel_min": 23,
+      "closed": false
+    }
+  ],
+  "incidents": [
+    {
+      "id": "INC-I-3301",
+      "title": "Underpass works on Kashmir Highway",
+      "edges": [
+        "E3"
+      ],
+      "type": "roadworks",
+      "severity": "high",
+      "status": "active",
+      "reported": "07:30",
+      "extra_delay_min": 0,
+      "closes_edge": [
+        "E3"
+      ],
+      "note": "The ramp down to the Blue Area side is closed for box girder lifts; through traffic is being sent via Shakarparian."
+    },
+    {
+      "id": "INC-I-3304",
+      "title": "VIP movement on Margalla Road",
+      "edges": [
+        "E2"
+      ],
+      "type": "protocol",
+      "severity": "medium",
+      "status": "active",
+      "reported": "08:10",
+      "extra_delay_min": 6,
+      "closes_edge": [],
+      "note": "A motorcade window has the road closed in bursts; expect three to four stoppages before the F-6 markaz."
+    },
+    {
+      "id": "INC-I-3307",
+      "title": "Debris on the Islamabad Expressway",
+      "edges": [
+        "E7"
+      ],
+      "type": "debris",
+      "severity": "low",
+      "status": "active",
+      "reported": "08:00",
+      "extra_delay_min": 4,
+      "closes_edge": [],
+      "note": "A load of scrap fell off a truck near the Chaklala junction; one lane is blocked while it is shovelled clear."
+    },
+    {
+      "id": "INC-I-3295",
+      "title": "Flyover repair at I-9",
+      "edges": [
+        "E4"
+      ],
+      "type": "roadworks",
+      "severity": "medium",
+      "status": "resolved",
+      "reported": "05:50",
+      "extra_delay_min": 0,
+      "closes_edge": [
+        "E4"
+      ],
+      "note": "Expansion joints are done and the I-9 Expressway has reopened in both directions."
+    }
+  ],
+  "examples": [
+    "Kashmir Highway closed near Blue Area, route me to I-8",
+    "I am leaving Faisal Mosque, get me to the airport, the Expressway has debris",
+    "VIP movement on Margalla Road, take me to PIMS Hospital",
+    "What is the best way from Bahria Town to the airport right now?"
+  ]
+}

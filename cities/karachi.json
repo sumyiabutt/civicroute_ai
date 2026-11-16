@@ -1,0 +1,289 @@
+{
+  "city": "Karachi",
+  "city_id": "karachi",
+  "updated_at": "2026-10-21T08:00:00+05:00",
+  "default_origin": "dha",
+  "default_destination": "saddar",
+  "nodes": [
+    {
+      "id": "saddar",
+      "name": "Saddar",
+      "area": "Saddar",
+      "kind": "commercial",
+      "lat": 24.8625,
+      "lng": 67.025,
+      "aliases": [
+        "saddar",
+        "saddar business district",
+        "cantonment"
+      ]
+    },
+    {
+      "id": "clifton",
+      "name": "Clifton Block 8",
+      "area": "Clifton",
+      "kind": "residential",
+      "lat": 24.8035,
+      "lng": 67.028,
+      "aliases": [
+        "clifton",
+        "block 8",
+        "seaview"
+      ]
+    },
+    {
+      "id": "dha",
+      "name": "DHA Phase 6",
+      "area": "DHA",
+      "kind": "residential",
+      "lat": 24.834,
+      "lng": 67.056,
+      "aliases": [
+        "dha",
+        "defence",
+        "phase 6"
+      ]
+    },
+    {
+      "id": "gulshan",
+      "name": "Gulshan-e-Iqbal",
+      "area": "Gulshan",
+      "kind": "retail",
+      "lat": 24.9175,
+      "lng": 67.086,
+      "aliases": [
+        "gulshan",
+        "gulshan-e-iqbal",
+        "jamshed"
+      ]
+    },
+    {
+      "id": "nazimabad",
+      "name": "Nazimabad",
+      "area": "Nazimabad",
+      "kind": "residential",
+      "lat": 24.907,
+      "lng": 67.06,
+      "aliases": [
+        "nazimabad",
+        "nazim"
+      ]
+    },
+    {
+      "id": "korangi",
+      "name": "Korangi Crossing",
+      "area": "Korangi",
+      "kind": "work",
+      "lat": 24.846,
+      "lng": 67.11,
+      "aliases": [
+        "korangi",
+        "crossing"
+      ]
+    },
+    {
+      "id": "airport",
+      "name": "Jinnah International Airport",
+      "area": "P.E.C.H.S",
+      "kind": "airport",
+      "lat": 24.9065,
+      "lng": 67.1608,
+      "aliases": [
+        "airport",
+        "jinnah",
+        "terminal",
+        "flight"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "E1",
+      "from": "clifton",
+      "to": "dha",
+      "name": "Khayaban-e-Iqbal",
+      "road_type": "arterial",
+      "distance_km": 5.7,
+      "base_travel_min": 9,
+      "closed": false
+    },
+    {
+      "id": "E2",
+      "from": "dha",
+      "to": "saddar",
+      "name": "Shahrah-e-Faisal",
+      "road_type": "arterial",
+      "distance_km": 5.8,
+      "base_travel_min": 9,
+      "closed": false
+    },
+    {
+      "id": "E3",
+      "from": "saddar",
+      "to": "nazimabad",
+      "name": "University Road",
+      "road_type": "arterial",
+      "distance_km": 7.9,
+      "base_travel_min": 12,
+      "closed": false
+    },
+    {
+      "id": "E4",
+      "from": "nazimabad",
+      "to": "gulshan",
+      "name": "Shaheed-e-Millath Road",
+      "road_type": "arterial",
+      "distance_km": 3.7,
+      "base_travel_min": 6,
+      "closed": false
+    },
+    {
+      "id": "E5",
+      "from": "gulshan",
+      "to": "airport",
+      "name": "Shahrah-e-Faisal",
+      "road_type": "arterial",
+      "distance_km": 9.9,
+      "base_travel_min": 15,
+      "closed": false
+    },
+    {
+      "id": "E6",
+      "from": "gulshan",
+      "to": "korangi",
+      "name": "Korangi Road",
+      "road_type": "arterial",
+      "distance_km": 10.8,
+      "base_travel_min": 16,
+      "closed": false
+    },
+    {
+      "id": "E7",
+      "from": "korangi",
+      "to": "airport",
+      "name": "Malir Expressway",
+      "road_type": "highway",
+      "distance_km": 11.0,
+      "base_travel_min": 10,
+      "closed": false
+    },
+    {
+      "id": "E8",
+      "from": "clifton",
+      "to": "saddar",
+      "name": "Shahrah-e-Liaquat",
+      "road_type": "street",
+      "distance_km": 8.5,
+      "base_travel_min": 20,
+      "closed": false
+    },
+    {
+      "id": "E9",
+      "from": "dha",
+      "to": "gulshan",
+      "name": "Karsaz Road",
+      "road_type": "arterial",
+      "distance_km": 12.7,
+      "base_travel_min": 19,
+      "closed": true
+    },
+    {
+      "id": "E10",
+      "from": "saddar",
+      "to": "korangi",
+      "name": "MA Jinnah Road",
+      "road_type": "arterial",
+      "distance_km": 11.4,
+      "base_travel_min": 17,
+      "closed": false
+    },
+    {
+      "id": "E11",
+      "from": "nazimabad",
+      "to": "airport",
+      "name": "N-5 National Highway",
+      "road_type": "highway",
+      "distance_km": 13.2,
+      "base_travel_min": 12,
+      "closed": false
+    },
+    {
+      "id": "E12",
+      "from": "saddar",
+      "to": "gulshan",
+      "name": "Tipu Sultan Road",
+      "road_type": "arterial",
+      "distance_km": 11.3,
+      "base_travel_min": 17,
+      "closed": false
+    }
+  ],
+  "incidents": [
+    {
+      "id": "INC-K-2101",
+      "title": "Flyover expansion on Shahrah-e-Faisal",
+      "edges": [
+        "E2"
+      ],
+      "type": "roadworks",
+      "severity": "high",
+      "status": "active",
+      "reported": "07:55",
+      "extra_delay_min": 0,
+      "closes_edge": [
+        "E2"
+      ],
+      "note": "The carriageway past the DHA entrance is shut for pier caps; traffic is being detoured through the phase interior roads."
+    },
+    {
+      "id": "INC-K-2104",
+      "title": "Waterlogging on Korangi Road",
+      "edges": [
+        "E6"
+      ],
+      "type": "flooding",
+      "severity": "medium",
+      "status": "active",
+      "reported": "08:20",
+      "extra_delay_min": 8,
+      "closes_edge": [],
+      "note": "Standing water knee-deep after the night rain; only the outer lane is passable near the crossing."
+    },
+    {
+      "id": "INC-K-2107",
+      "title": "Road protest near Safari Park",
+      "edges": [
+        "E4"
+      ],
+      "type": "protest",
+      "severity": "medium",
+      "status": "active",
+      "reported": "08:05",
+      "extra_delay_min": 5,
+      "closes_edge": [],
+      "note": "A sit-in has pushed one carriageway down to a single lane; police are letting local traffic through in batches."
+    },
+    {
+      "id": "INC-K-2098",
+      "title": "Crane recovery on the N-5",
+      "edges": [
+        "E11"
+      ],
+      "type": "breakdown",
+      "severity": "medium",
+      "status": "resolved",
+      "reported": "06:10",
+      "extra_delay_min": 0,
+      "closes_edge": [
+        "E11"
+      ],
+      "note": "The overturned trailer is clear and both lanes on the national highway have reopened."
+    }
+  ],
+  "examples": [
+    "Shahrah-e-Faisal closed near DHA, route me to Saddar",
+    "I am leaving Clifton, get me to the airport, Korangi Road is waterlogged",
+    "Waterlogging on Korangi Road, take me to Nazimabad",
+    "What is the best way from Gulshan-e-Iqbal to Jinnah Airport right now?"
+  ]
+}

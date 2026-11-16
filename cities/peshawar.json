@@ -1,0 +1,289 @@
+{
+  "city": "Peshawar",
+  "city_id": "peshawar",
+  "updated_at": "2026-10-21T08:00:00+05:00",
+  "default_origin": "balahissar",
+  "default_destination": "hayatabad",
+  "nodes": [
+    {
+      "id": "saddar",
+      "name": "Saddar Peshawar",
+      "area": "Saddar",
+      "kind": "commercial",
+      "lat": 34.004,
+      "lng": 71.547,
+      "aliases": [
+        "saddar",
+        "saddar peshawar",
+        "cantonment"
+      ]
+    },
+    {
+      "id": "qissa",
+      "name": "Qissa Khwani Bazaar",
+      "area": "Andarisheher",
+      "kind": "retail",
+      "lat": 34.011,
+      "lng": 71.544,
+      "aliases": [
+        "qissa",
+        "qissa khwani",
+        "katchehri"
+      ]
+    },
+    {
+      "id": "balahissar",
+      "name": "Balahissar",
+      "area": "Balahissar",
+      "kind": "work",
+      "lat": 34.025,
+      "lng": 71.544,
+      "aliases": [
+        "balahissar",
+        "balakot"
+      ]
+    },
+    {
+      "id": "univ",
+      "name": "University of Peshawar",
+      "area": "UET Campus Road",
+      "kind": "education",
+      "lat": 34.009,
+      "lng": 71.521,
+      "aliases": [
+        "university",
+        "univ",
+        "uop"
+      ]
+    },
+    {
+      "id": "hayatabad",
+      "name": "Hayatabad Phase 5",
+      "area": "Hayatabad",
+      "kind": "residential",
+      "lat": 33.99,
+      "lng": 71.5,
+      "aliases": [
+        "hayatabad",
+        "phase 5",
+        "bibi pak"
+      ]
+    },
+    {
+      "id": "airport",
+      "name": "Bacha Khan International Airport",
+      "area": "Hayatabad",
+      "kind": "airport",
+      "lat": 33.9937,
+      "lng": 71.5144,
+      "aliases": [
+        "airport",
+        "bacha khan",
+        "terminal",
+        "flight"
+      ]
+    },
+    {
+      "id": "karkhano",
+      "name": "Karkhano Market",
+      "area": "Karkhano",
+      "kind": "retail",
+      "lat": 33.974,
+      "lng": 71.533,
+      "aliases": [
+        "karkhano",
+        "market"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "E1",
+      "from": "saddar",
+      "to": "qissa",
+      "name": "Khyber Road",
+      "road_type": "street",
+      "distance_km": 1.1,
+      "base_travel_min": 3,
+      "closed": false
+    },
+    {
+      "id": "E2",
+      "from": "qissa",
+      "to": "balahissar",
+      "name": "GT Road",
+      "road_type": "arterial",
+      "distance_km": 2.0,
+      "base_travel_min": 3,
+      "closed": false
+    },
+    {
+      "id": "E3",
+      "from": "saddar",
+      "to": "univ",
+      "name": "Ring Road",
+      "road_type": "arterial",
+      "distance_km": 3.2,
+      "base_travel_min": 5,
+      "closed": false
+    },
+    {
+      "id": "E4",
+      "from": "univ",
+      "to": "hayatabad",
+      "name": "Charsadda Road",
+      "road_type": "arterial",
+      "distance_km": 3.7,
+      "base_travel_min": 6,
+      "closed": false
+    },
+    {
+      "id": "E5",
+      "from": "hayatabad",
+      "to": "airport",
+      "name": "Jalala Road",
+      "road_type": "arterial",
+      "distance_km": 1.8,
+      "base_travel_min": 3,
+      "closed": false
+    },
+    {
+      "id": "E6",
+      "from": "saddar",
+      "to": "karkhano",
+      "name": "Bara Road",
+      "road_type": "arterial",
+      "distance_km": 4.6,
+      "base_travel_min": 7,
+      "closed": false
+    },
+    {
+      "id": "E7",
+      "from": "karkhano",
+      "to": "hayatabad",
+      "name": "Karkhano Road",
+      "road_type": "street",
+      "distance_km": 4.6,
+      "base_travel_min": 11,
+      "closed": false
+    },
+    {
+      "id": "E8",
+      "from": "balahissar",
+      "to": "univ",
+      "name": "Ring Road",
+      "road_type": "arterial",
+      "distance_km": 3.6,
+      "base_travel_min": 5,
+      "closed": false
+    },
+    {
+      "id": "E9",
+      "from": "univ",
+      "to": "karkhano",
+      "name": "Mardan Road",
+      "road_type": "arterial",
+      "distance_km": 5.3,
+      "base_travel_min": 8,
+      "closed": true
+    },
+    {
+      "id": "E10",
+      "from": "saddar",
+      "to": "airport",
+      "name": "Airport Road",
+      "road_type": "highway",
+      "distance_km": 4.2,
+      "base_travel_min": 4,
+      "closed": false
+    },
+    {
+      "id": "E11",
+      "from": "balahissar",
+      "to": "hayatabad",
+      "name": "GT Road",
+      "road_type": "highway",
+      "distance_km": 7.3,
+      "base_travel_min": 7,
+      "closed": false
+    },
+    {
+      "id": "E12",
+      "from": "univ",
+      "to": "airport",
+      "name": "Research Road",
+      "road_type": "street",
+      "distance_km": 2.3,
+      "base_travel_min": 6,
+      "closed": false
+    }
+  ],
+  "incidents": [
+    {
+      "id": "INC-P-4401",
+      "title": "Bridge repair on GT Road at Gharibabad",
+      "edges": [
+        "E2"
+      ],
+      "type": "roadworks",
+      "severity": "high",
+      "status": "active",
+      "reported": "07:20",
+      "extra_delay_min": 0,
+      "closes_edge": [
+        "E2"
+      ],
+      "note": "The deck span near the Gharibabad bridge is shut for resurfacing; heavy traffic is being held on the ring road side."
+    },
+    {
+      "id": "INC-P-4404",
+      "title": "Market congestion on Khyber Road",
+      "edges": [
+        "E1"
+      ],
+      "type": "congestion",
+      "severity": "medium",
+      "status": "active",
+      "reported": "08:15",
+      "extra_delay_min": 5,
+      "closes_edge": [],
+      "note": "Loading vans have blocked the bazaar approach; the traffic light cycle is being extended by hand."
+    },
+    {
+      "id": "INC-P-4407",
+      "title": "Pipeline burst on Charsadda Road",
+      "edges": [
+        "E4"
+      ],
+      "type": "flooding",
+      "severity": "medium",
+      "status": "active",
+      "reported": "08:00",
+      "extra_delay_min": 7,
+      "closes_edge": [],
+      "note": "Water is across the carriage near the university turn; a trench is open and one lane is signal-flagged."
+    },
+    {
+      "id": "INC-P-4398",
+      "title": "Overturned tanker on Airport Road",
+      "edges": [
+        "E10"
+      ],
+      "type": "collision",
+      "severity": "high",
+      "status": "resolved",
+      "reported": "05:40",
+      "extra_delay_min": 0,
+      "closes_edge": [
+        "E10"
+      ],
+      "note": "The tanker has been winched off the carriageway and Airport Road is clear to the terminal turn."
+    }
+  ],
+  "examples": [
+    "GT Road closed at Gharibabad, route me to Saddar",
+    "I am leaving Hayatabad, get me to the airport, Charsadda Road has a burst pipeline",
+    "Pipeline burst on Charsadda Road, take me to the university",
+    "What is the best way from Qissa Khwani Bazaar to Bacha Khan Airport right now?"
+  ]
+}
