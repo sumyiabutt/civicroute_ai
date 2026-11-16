@@ -1,5 +1,8 @@
 # CivicRoute AI
 
+**Live demo: <https://civicrouteai-77ci.vercel.app>** - no install, no credentials; it runs the
+rule-based planner over the in-process MCP server.
+
 The hackathon write-up lives in [docs/CivicRoute-AI-Report.md](docs/CivicRoute-AI-Report.md)
 (same content as [docs/CivicRoute-AI-Report.docx](docs/CivicRoute-AI-Report.docx)).
 
@@ -34,6 +37,9 @@ Pick a city from the dropdown and the map re-centers on it.
   cities/*.json  civicroute/network.py  (Dijkstra + congestion model, one graph per city)
 ```
 
+That is the two-process path run from a terminal. The hosted demo is the same code with one
+different pipe - see [Deploying to Vercel](#deploying-to-vercel).
+
 ## What the agent does
 
 It is not a single-shot prompt. Each run is a visible multi-step tool conversation. Every tool
@@ -63,7 +69,7 @@ engine answered and why it switched.
 ## Requirements
 
 - Python 3.10+ (3.12 recommended)
-- Two terminals: one for the MCP server, one for the web app
+- Two terminals: one for the MCP server, one for the web app (or one command - `start_demo.py`)
 - Internet access from the browser, for the OpenStreetMap tiles and Leaflet from cdnjs
 - Optional: AWS credentials with Amazon Bedrock model access
 
@@ -133,7 +139,10 @@ PORT=8010 CIVICROUTE_MCP_PORT=8778 python start_demo.py
 
 ## Deploying to Vercel
 
-Vercel runs a Python app as one serverless function per request, which suits this project with one
+The repo is connected to Vercel, so every push to `main` builds and promotes
+<https://civicrouteai-77ci.vercel.app>; a rebuild is one click in the dashboard.
+
+Vercel builds a Python app into one serverless function, which suits this project with one
 adjustment: nothing is left alive to hold the MCP socket, so on Vercel the agent reaches the *same*
 FastMCP server over the MCP SDK's in-memory transport instead of TCP. `CIVICROUTE_MCP_TRANSPORT`
 picks it (`http` locally, `inmemory` when the platform sets `VERCEL`), and the tools, their JSON
@@ -193,7 +202,7 @@ and the timeline fills in like this:
    because it is absorbing the diverted Canal Road traffic, which is why the answer is
    "about 37 minutes, not 27".
 
-Switch the city to Karachi and the same three steps run against `cities/karachi.json`: the
+Switch the city to Karachi and the same steps run against `cities/karachi.json`: the
 flagship example there closes `E2` (Shahrah-e-Faisal) and the recommendation drops to
 Khayaban-e-Iqbal and Shahrah-e-Liaquat.
 
@@ -343,6 +352,9 @@ Peak vs off-peak: pass `peak: false` to `compare_routes` / `estimate_congestion`
 | Engine badge says `rule-based planner` even though you have AWS | The amber note explains why: missing `boto3`, no `AWS_REGION`, or credentials that do not resolve. `aws sts get-caller-identity` is the quickest check. |
 | `ValidationException` from Bedrock about the tool schema | The model id is wrong for your region, or the account lacks Claude model access. Set `CIVICROUTE_MODEL_ID` to a model enabled in your region. |
 | `ImportError: attempted relative import` | Run with `-m` (`python -m civicroute.mcp_server`) from the project root, not the file path. |
+| Deployed site answers `404 NOT_FOUND` on every route, HTML and API alike | Vercel built it as a static site. Project -> Settings -> Build & Deployment -> Framework Preset -> **FastAPI**, Save, redeploy. |
+| Vercel build fails with `[unused_function] The pattern "main.py" ... doesn't match any Serverless Functions inside the api directory` | A `vercel.json` with a `functions` block survived in the commit being built. It is not needed (Hobby already allows 300 seconds) - delete the file. |
+| First request on the hosted demo is slower than the rest | The serverless function cold-starts. Press **Plan my route** once before a demo so the next call is warm. |
 | Both terminals agree but 8777 is busy | `CIVICROUTE_MCP_PORT=8778 python -m civicroute.mcp_server` and point `CIVICROUTE_MCP_URL` at it. |
 
 ## Notes on the MCP protocol version
