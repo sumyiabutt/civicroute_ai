@@ -131,33 +131,37 @@ python start_demo.py            # web app on http://127.0.0.1:8000, MCP on 8777
 PORT=8010 CIVICROUTE_MCP_PORT=8778 python start_demo.py
 ```
 
-## Deploying to a Hugging Face Space
+## Deploying to Vercel
 
-A Space gives you a real container with a public URL and no payment method, which is what this app
-needs - two processes, one of them long-lived. The Space repository holds only the
-[Dockerfile](Dockerfile), and that Dockerfile pulls this repo's `main` at build time, so pushing
-here stays the only way the hosted demo changes.
+Vercel runs a Python app as one serverless function per request, which suits this project with one
+adjustment: nothing is left alive to hold the MCP socket, so on Vercel the agent reaches the *same*
+FastMCP server over the MCP SDK's in-memory transport instead of TCP. `CIVICROUTE_MCP_TRANSPORT`
+picks it (`http` locally, `inmemory` when the platform sets `VERCEL`), and the tools, their JSON
+schemas, the Bedrock tool loop and the step timeline are unchanged - only the pipe between client
+and server differs.
 
-1. <https://huggingface.co> -> sign up (free) -> **Spaces** -> **Create new Space**.
-2. SDK: **Docker**, license MIT, then **Create Space**.
-3. In the Space: **Files** -> **Add file** -> **Upload a file** -> pick this repo's `Dockerfile`, commit.
-4. It builds, then serves the same page at `https://<user>-<space>.hf.space`.
+Run it locally exactly the way Vercel will:
 
-Free Spaces sleep after a quiet stretch and take a couple of minutes to wake, so open the URL once
-before a demo. To enable Bedrock there, add `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and
-`AWS_REGION` under **Settings** -> **Repository secrets** - without them the rule-based planner
-answers, which is the intended demo path.
+```bash
+VERCEL=1 CIVICROUTE_MCP_URL=http://127.0.0.1:9999/mcp \
+  python -m uvicorn main:app --host 127.0.0.1 --port 8011
+```
+
+The dead port in that command is the point: the plan still completes, because no socket is used.
+`main.py` is the entrypoint Vercel looks for, `vercel.json` gives the function 60 seconds, and
+`.python-version` pins 3.12. Import the repo in Vercel and every push to `main` deploys it.
+
+To use Bedrock there, add `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` in Project
+-> Environment Variables - without them the rule-based planner answers, which is the intended demo
+path.
 
 ## Deploying to Render instead
 
 `render.yaml` is a Render blueprint: one web service, `pip install -r requirements.txt` on build,
 `python start_demo.py` to start, health check on `/api/health` - picked up by **New** ->
-**Blueprint** -> this repo. Note that a brand-new Render account is asked for a card (a $1 identity
-authorization) before it will create even a free instance.
-
-Both hosts run the same architecture. Serverless hosts like Vercel cannot run this app as it is
-written: the agent talks to a long-lived MCP server over Streamable HTTP, and Vercel has no place to
-keep that process.
+**Blueprint** -> this repo. That host keeps the real TCP socket, but Render asks a brand-new account
+for a card (a $1 identity authorization) before it will create even a $0 free instance, and
+Hugging Face Spaces now need a PRO plan for the Docker SDK, which is why Vercel is the free path.
 
 ## Worked example
 
@@ -256,6 +260,7 @@ All optional - see `.env.example`. Export them in your shell (this project does 
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `CIVICROUTE_MCP_URL` | `http://127.0.0.1:8777/mcp` | Where the agent connects |
+| `CIVICROUTE_MCP_TRANSPORT` | `http`, or `inmemory` on Vercel | TCP socket vs the SDK's in-memory pipe |
 | `CIVICROUTE_MCP_HOST` / `CIVICROUTE_MCP_PORT` | `127.0.0.1` / `8777` | Server bind address |
 | `CIVICROUTE_CITY` | `lahore` | City used when nothing else names one |
 | `CIVICROUTE_ROADS` | empty | One network file to use instead of everything in `cities/` |
@@ -313,7 +318,7 @@ Peak vs off-peak: pass `peak: false` to `compare_routes` / `estimate_congestion`
 | `civicroute/templates/index.html` | The page: city dropdown, Leaflet + OpenStreetMap traffic layer, route cards, reasoning timeline |
 | `docs/CivicRoute-AI-Report.md`, `.docx` | The hackathon write-up: architecture, worked example with real numbers, verification log |
 | `start_demo.py` | Spawns the MCP server then the web app, so one process tree can be deployed |
-| `Dockerfile` | The only file a Hugging Face Space needs; it pulls `main` from GitHub at build time |
+| `main.py`, `vercel.json`, `.python-version` | The Vercel entrypoint, its 60-second function limit and its pinned Python |
 | `render.yaml` | Render blueprint for the web service that runs `start_demo.py` |
 | `requirements.txt`, `LICENSE` | Setup and MIT licence |
 

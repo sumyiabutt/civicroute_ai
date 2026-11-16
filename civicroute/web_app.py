@@ -120,7 +120,7 @@ async def home(request: Request, city: str = ""):
             "incident_count": len(net.active_incidents()),
             "examples": net.examples,
             "cities": json_for_script({"default": default_city, "list": [n.summary() for n in networks.values()]}),
-            "mcp_url": agent.MCP_URL,
+            "mcp_url": agent.MCP_ENDPOINT,
             "map_state": json_for_script(net.map_state()),
         },
     )
@@ -167,7 +167,8 @@ async def plan(request: Request):
                 "pricing": {},
                 "incidents": {},
                 "map": net.map_state(),
-                "note": "Check that the MCP server is running and that both processes share CIVICROUTE_MCP_URL.",
+                "note": "Check that the MCP server is running, or that CIVICROUTE_MCP_TRANSPORT "
+                        "matches how this app is hosted.",
             },
         )
     result["city"] = key

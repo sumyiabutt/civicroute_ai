@@ -18,6 +18,10 @@ from mcp import ClientSession
 from mcp.client.streamable_http import streamablehttp_client
 
 MCP_URL = os.environ.get("CIVICROUTE_MCP_URL", "http://127.0.0.1:8777/mcp")
+# A request on Vercel gets one short-lived function, so nothing there can hold the MCP socket
+# open. The same FastMCP server then answers over the SDK's in-memory transport instead.
+TRANSPORT = os.environ.get("CIVICROUTE_MCP_TRANSPORT") or ("inmemory" if os.environ.get("VERCEL") else "http")
+MCP_ENDPOINT = MCP_URL if TRANSPORT == "http" else "in-process MCP server (SDK memory transport)"
 BEDROCK_MODEL_ID = os.environ.get("CIVICROUTE_MODEL_ID", "us.anthropic.claude-sonnet-4-20250514-v1:0")
 MAX_AGENT_STEPS = int(os.environ.get("CIVICROUTE_MAX_STEPS", "8"))
 DEFAULT_CITY = os.environ.get("CIVICROUTE_CITY", "lahore")
@@ -69,28 +73,41 @@ class ToolRouter:
         self.city = (city or DEFAULT_CITY).strip().lower().replace(" ", "") or DEFAULT_CITY
         self._transport = None
         self._session = None
+        self._session_is_borrowed = False
         self.session: Optional[ClientSession] = None
         self.tool_specs: list = []
         self.payloads: dict = {}
 
     async def __aenter__(self) -> "ToolRouter":
         try:
-            self._transport = streamablehttp_client(self.url)
-            read, write, _ = await self._transport.__aenter__()
-            self._session = ClientSession(read, write)
-            self.session = await self._session.__aenter__()
-            await self.session.initialize()
+            if TRANSPORT == "inmemory":
+                from mcp.shared.memory import create_connected_server_and_client_session
+
+                from .mcp_server import mcp as fastmcp_server
+
+                self._transport = create_connected_server_and_client_session(fastmcp_server)
+                self._session = await self._transport.__aenter__()
+                self._session_is_borrowed = True
+                self.session = self._session
+            else:
+                self._transport = streamablehttp_client(self.url)
+                read, write, _ = await self._transport.__aenter__()
+                self._session = ClientSession(read, write)
+                self.session = await self._session.__aenter__()
+                await self.session.initialize()
             listed = await self.session.list_tools()
             self.tool_specs = list(listed.tools)
         except Exception as exc:  # noqa: BLE001
             raise McpUnavailable(
                 "Could not reach the CivicRoute MCP server at {}. Start it with "
                 "`python -m civicroute.mcp_server`.".format(self.url)
+                if TRANSPORT == "http"
+                else "The in-process CivicRoute MCP server did not start."
             ) from exc
         return self
 
     async def __aexit__(self, *exc_info) -> None:
-        if self._session is not None:
+        if self._session is not None and not self._session_is_borrowed:
             await self._session.__aexit__(*exc_info)
         if self._transport is not None:
             await self._transport.__aexit__(*exc_info)
