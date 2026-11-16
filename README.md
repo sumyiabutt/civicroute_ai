@@ -121,6 +121,31 @@ The **From** and **To** selects default to *Auto - read from my sentence*, so th
 endpoints out of your words ("route me to Mayo Hospital", "I am leaving Model Town ... to the
 airport"). Pin them with the selects if you want an exact origin/destination for the demo.
 
+## Run as one process
+
+Hosts that give you a single service cannot keep two terminals alive, so `start_demo.py` does it
+in one command - it spawns the MCP server, waits for the port, then serves the web app on `$PORT`:
+
+```bash
+python start_demo.py            # web app on http://127.0.0.1:8000, MCP on 8777
+PORT=8010 CIVICROUTE_MCP_PORT=8778 python start_demo.py
+```
+
+## Deploying to Render
+
+`render.yaml` is a Render blueprint: one free web service, `pip install -r requirements.txt` on
+build, `python start_demo.py` to start, health check on `/api/health`.
+
+1. <https://render.com> -> **New** -> **Blueprint** -> pick this repo. Render reads `render.yaml`.
+2. Deploy. The service URL serves the same page as localhost.
+
+Free web services sleep after inactivity, so the first request after a quiet stretch can take
+~50 seconds - click **Plan my route** once before a demo. Serverless hosts like Vercel cannot run
+this app: the agent talks to a long-lived MCP server over Streamable HTTP, and Vercel has no place
+to keep that process. To use Bedrock in a deployed service, add `AWS_ACCESS_KEY_ID`,
+`AWS_SECRET_ACCESS_KEY` and `AWS_REGION` in the Render environment tab - without them the
+rule-based planner answers, which is the intended demo path.
+
 ## Worked example
 
 Type `Canal Road closed near Liberty Market, route me to Mayo Hospital` with the city on Lahore
@@ -274,6 +299,8 @@ Peak vs off-peak: pass `peak: false` to `compare_routes` / `estimate_congestion`
 | `civicroute/web_app.py` | FastAPI routes, the city registry, and the map payload attached to every plan |
 | `civicroute/templates/index.html` | The page: city dropdown, Leaflet + OpenStreetMap traffic layer, route cards, reasoning timeline |
 | `docs/CivicRoute-AI-Report.md`, `.docx` | The hackathon write-up: architecture, worked example with real numbers, verification log |
+| `start_demo.py` | Spawns the MCP server then the web app, so one process tree can be deployed |
+| `render.yaml` | Render blueprint for the free web service that runs `start_demo.py` |
 | `requirements.txt`, `LICENSE` | Setup and MIT licence |
 
 ## Troubleshooting

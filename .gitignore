@@ -27,3 +27,6 @@ desktop.ini
 _verify_*
 *.log
 tmp/
+
+# unrelated personal documents that sit in this folder but must never go public
+docs/bigdata/

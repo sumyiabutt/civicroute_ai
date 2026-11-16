@@ -1,0 +1,15 @@
+# Render blueprint - one free web service runs both processes (start_demo.py spawns the MCP
+# server, then serves the web app on the platform PORT). Push the repo and Render reads this.
+services:
+  - type: web
+    name: civicroute-ai
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python start_demo.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.10"
+      - key: CIVICROUTE_CITY
+        value: lahore
