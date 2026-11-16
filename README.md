@@ -148,13 +148,19 @@ VERCEL=1 CIVICROUTE_MCP_URL=http://127.0.0.1:9999/mcp \
 ```
 
 The dead port in that command is the point: the plan still completes, because no socket is used.
-`main.py` is the entrypoint Vercel looks for, `vercel.json` gives the function 60 seconds, and
-`.python-version` pins 3.12. Import the repo in Vercel and every push to `main` deploys it.
+`main.py` is the entrypoint Vercel looks for and `.python-version` pins 3.12. Import the repo in
+Vercel and every push to `main` deploys it.
 
-A project imported before `main.py` existed keeps the preset it first detected, and then the build
-dies with `The pattern "main.py" defined in functions doesn't match any Serverless Functions inside
-the api directory`. Fix it once: Project -> Settings -> Build & Deployment -> **Framework Preset**
--> **FastAPI** -> Save, then redeploy.
+Two settings to leave alone. First, the project's **Framework Preset** must be FastAPI: a project
+imported before `main.py` existed keeps the preset it first detected and the app is then built as a
+static site, so every route answers `404 NOT_FOUND`. Fix it once - Project -> Settings -> Build &
+Deployment -> **Framework Preset** -> **FastAPI** -> Save, then redeploy. Second, there is
+deliberately **no `vercel.json`**: an entry like `functions: { "main.py": { "maxDuration": 60 } }`
+only matches when the FastAPI builder produced that function, and under a wrong or stale preset it
+fails the build outright with `[unused_function] The pattern "main.py" defined in functions doesn't
+match any Serverless Functions inside the api directory`. A Hobby function already gets 300 seconds
+by default, which is far more than a four-step plan needs, so the override bought nothing and only
+added a way to break.
 
 To use Bedrock there, add `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` in Project
 -> Environment Variables - without them the rule-based planner answers, which is the intended demo
@@ -323,7 +329,7 @@ Peak vs off-peak: pass `peak: false` to `compare_routes` / `estimate_congestion`
 | `civicroute/templates/index.html` | The page: city dropdown, Leaflet + OpenStreetMap traffic layer, route cards, reasoning timeline |
 | `docs/CivicRoute-AI-Report.md`, `.docx` | The hackathon write-up: architecture, worked example with real numbers, verification log |
 | `start_demo.py` | Spawns the MCP server then the web app, so one process tree can be deployed |
-| `main.py`, `vercel.json`, `.python-version` | The Vercel entrypoint, its 60-second function limit and its pinned Python |
+| `main.py`, `.python-version` | The Vercel entrypoint and its pinned Python; `vercel.json` is deliberately absent, see the Vercel section |
 | `render.yaml` | Render blueprint for the web service that runs `start_demo.py` |
 | `requirements.txt`, `LICENSE` | Setup and MIT licence |
 
