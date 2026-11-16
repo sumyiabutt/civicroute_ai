@@ -151,6 +151,11 @@ The dead port in that command is the point: the plan still completes, because no
 `main.py` is the entrypoint Vercel looks for, `vercel.json` gives the function 60 seconds, and
 `.python-version` pins 3.12. Import the repo in Vercel and every push to `main` deploys it.
 
+A project imported before `main.py` existed keeps the preset it first detected, and then the build
+dies with `The pattern "main.py" defined in functions doesn't match any Serverless Functions inside
+the api directory`. Fix it once: Project -> Settings -> Build & Deployment -> **Framework Preset**
+-> **FastAPI** -> Save, then redeploy.
+
 To use Bedrock there, add `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` in Project
 -> Environment Variables - without them the rule-based planner answers, which is the intended demo
 path.
